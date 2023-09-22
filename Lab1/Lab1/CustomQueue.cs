@@ -6,20 +6,39 @@ namespace Lab1;
 public class CustomQueue <T>: IEnumerable<T>
 {
     private int _size;
-    
-    public int Count { get; }
+    private Node<T> _headNode;
+    private Node<T> _tailNode;
+
+    public int Count
+    {
+        get
+        {
+            return _size;
+        }
+    }
+
     public bool IsSynchronized { get; }
     public object SyncRoot { get; }
     
     
     public CustomQueue()
     {
-            
+        _headNode = null;
+        _tailNode = null;
+        _size= 0;
+    }
+
+    public CustomQueue(IEnumerable<T> collection)
+    {
+        foreach (var item in collection)
+        {
+            Enqueue(item);
+        }
     }
     
     IEnumerator<T> IEnumerable<T>.GetEnumerator()
     {
-        throw new NotImplementedException();
+        return new MyEnumerator(_headNode);
     }
 
     public IEnumerator GetEnumerator()
@@ -34,12 +53,32 @@ public class CustomQueue <T>: IEnumerable<T>
 
     public void Enqueue(T item)
     {
-        throw new NotImplementedException();
+        Node<T> node = new Node<T>(item);
+        if (_headNode == null)
+        {
+            _headNode = node;
+            _tailNode = node;
+        }
+
+        else
+        {
+            _tailNode.next = new Node<T>(item);
+            _tailNode = _tailNode.next;
+        }
+
+        _size++;
     }
     
     public T Dequeue()
     {
-        throw new NotImplementedException();
+        if (_headNode == null)
+            throw new InvalidOperationException();
+
+        T headNodeValue = _headNode.value;
+        _headNode = _headNode.next;
+
+        _size--;
+        return headNodeValue;
     }
 
     public void Clear()
