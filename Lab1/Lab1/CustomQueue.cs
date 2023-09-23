@@ -10,10 +10,6 @@ public class CustomQueue <T>: IEnumerable<T> where T: IComparable
     private Node<T> _tailNode;
 
     public int Count => _size;
-
-    public bool IsSynchronized { get; }
-    public object SyncRoot { get; }
-    
     
     public CustomQueue()
     {
@@ -24,6 +20,8 @@ public class CustomQueue <T>: IEnumerable<T> where T: IComparable
 
     public CustomQueue(IEnumerable<T> collection)
     {
+        _headNode = null;
+        _tailNode = null;
         _size = 0;
         foreach (var item in collection)
         {
@@ -49,12 +47,12 @@ public class CustomQueue <T>: IEnumerable<T> where T: IComparable
     public void CopyTo(T[] array, int index)
     {
         Node<T> activeNode = _headNode;
-        if (index < 0 || index > array.Length - 1)
-            throw new ArgumentOutOfRangeException();
-        else if (array == null)
-            throw new ArgumentNullException();
+        if (array == null)
+            throw new ArgumentNullException("Value can not be null");
+        else if (index < 0 || index > array.Length - 1)
+            throw new ArgumentOutOfRangeException("Index can not be out of range");
         else if (array.Length - index + 1 < _size)
-            throw new ArgumentException();
+            throw new ArgumentException("Number of the elements in CustomQueue is greater than the Array can contain");
         
         while (activeNode != null)
         {
@@ -85,7 +83,7 @@ public class CustomQueue <T>: IEnumerable<T> where T: IComparable
     public T Dequeue()
     {
         if (_headNode == null)
-            throw new InvalidOperationException();
+            throw new InvalidOperationException("CustomQueue is empty");
 
         T headNodeValue = _headNode.value;
         _headNode = _headNode.next;
@@ -116,10 +114,32 @@ public class CustomQueue <T>: IEnumerable<T> where T: IComparable
     public T Peek()
     {
         if (_size == 0)
-            throw new InvalidOperationException();
+            throw new InvalidOperationException("CustomQueue is empty");
+        
         return _headNode.value;
     }
-    
+
+    public T[] ToArray()
+    {
+        Node<T> activeNode = _headNode;
+        T[] array = new T[_size];
+        for (int i = 0; i < _size; i++)
+        {
+            array[i] = activeNode.value;
+            activeNode = activeNode.next;
+        }
+
+        return array;
+    }
+
+    public CustomQueue<T> Reverse()
+    {
+        CustomQueue<T> reversed_queue;
+        IEnumerable<T> tempArray;
+        tempArray = this.ToArray().Reverse();
+        reversed_queue = new CustomQueue<T>(tempArray);
+        return reversed_queue;
+    }
     
     private class MyEnumerator: IEnumerator<T> 
     {
@@ -137,11 +157,6 @@ public class CustomQueue <T>: IEnumerable<T> where T: IComparable
             _activeNode = _headNode;
         }
         
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
         public bool MoveNext()
         {
             if (_headNode == null)
@@ -169,6 +184,10 @@ public class CustomQueue <T>: IEnumerable<T> where T: IComparable
             _activeNode = _headNode;
         }
         
+        public void Dispose()
+        {
+            
+        }
     }
     
 }
