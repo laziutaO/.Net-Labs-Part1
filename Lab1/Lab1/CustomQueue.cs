@@ -37,13 +37,18 @@ public class CustomQueue <T>: IEnumerable<T>
     }
     
     IEnumerator<T> IEnumerable<T>.GetEnumerator()
-    {
-        return new MyEnumerator(_headNode);
+    { 
+        Node<T> currentNode = _headNode;
+        while (currentNode != null)
+        {
+            yield return currentNode.value;
+            currentNode = currentNode.next;
+        }
     }
 
     public IEnumerator GetEnumerator()
     {
-        throw new NotImplementedException();
+        return new MyEnumerator(_headNode);
     }
 
     public void CopyTo(Array array, int index)
@@ -51,6 +56,10 @@ public class CustomQueue <T>: IEnumerable<T>
         throw new NotImplementedException();
     }
 
+    public T ReturnHead()
+    {
+        return _headNode.value;
+    }
     public void Enqueue(T item)
     {
         Node<T> node = new Node<T>(item);
@@ -65,7 +74,7 @@ public class CustomQueue <T>: IEnumerable<T>
             _tailNode.next = new Node<T>(item);
             _tailNode = _tailNode.next;
         }
-
+  
         _size++;
     }
     
@@ -110,6 +119,7 @@ public class CustomQueue <T>: IEnumerable<T>
     {
         private Node<T> _activeNode;
         private Node<T> _headNode;
+        private bool _beganEnumerating = false;
 
         public T Current => _activeNode.value;
 
@@ -130,6 +140,13 @@ public class CustomQueue <T>: IEnumerable<T>
         {
             if (_headNode == null)
                 return false;
+            
+            else if(!_beganEnumerating)
+            {
+                _beganEnumerating = true;
+                _activeNode = _headNode;
+                return true;
+            }
             
             bool hasNext = _activeNode.next != null;
             if (!hasNext)
