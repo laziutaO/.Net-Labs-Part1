@@ -3,19 +3,13 @@
 
 namespace Lab1;
 
-public class CustomQueue <T>: IEnumerable<T>
+public class CustomQueue <T>: IEnumerable<T> where T: IComparable
 {
     private int _size;
     private Node<T> _headNode;
     private Node<T> _tailNode;
 
-    public int Count
-    {
-        get
-        {
-            return _size;
-        }
-    }
+    public int Count => _size;
 
     public bool IsSynchronized { get; }
     public object SyncRoot { get; }
@@ -30,6 +24,7 @@ public class CustomQueue <T>: IEnumerable<T>
 
     public CustomQueue(IEnumerable<T> collection)
     {
+        _size = 0;
         foreach (var item in collection)
         {
             Enqueue(item);
@@ -51,15 +46,24 @@ public class CustomQueue <T>: IEnumerable<T>
         return new MyEnumerator(_headNode);
     }
 
-    public void CopyTo(Array array, int index)
+    public void CopyTo(T[] array, int index)
     {
-        throw new NotImplementedException();
+        Node<T> activeNode = _headNode;
+        if (index < 0 || index > array.Length - 1)
+            throw new ArgumentOutOfRangeException();
+        else if (array == null)
+            throw new ArgumentNullException();
+        else if (array.Length - index + 1 < _size)
+            throw new ArgumentException();
+        
+        while (activeNode != null)
+        {
+            array[index] = activeNode.value;
+            activeNode = activeNode.next;
+            index++;
+        }
     }
-
-    public T ReturnHead()
-    {
-        return _headNode.value;
-    }
+    
     public void Enqueue(T item)
     {
         Node<T> node = new Node<T>(item);
@@ -92,28 +96,30 @@ public class CustomQueue <T>: IEnumerable<T>
 
     public void Clear()
     {
-        throw new NotImplementedException();
+        _headNode = null;
+        _tailNode = null;
     }
 
     public bool Contains(T item)
     {
-        throw new NotImplementedException();
+        Node<T> activeNode = _headNode;
+        while (activeNode != null)
+        {
+            if (activeNode.value.Equals(item))
+                return true;
+            activeNode = activeNode.next;
+        }
+
+        return false;
     }
 
     public T Peek()
     {
-        throw new NotImplementedException();
+        if (_size == 0)
+            throw new InvalidOperationException();
+        return _headNode.value;
     }
-
-    public void SetCapacity(int capacity)
-    {
-        throw new NotImplementedException();
-    }
-
-    public int EnsureCapacity(int capacity)
-    {
-        throw new NotImplementedException();
-    }
+    
     
     private class MyEnumerator: IEnumerator<T> 
     {
