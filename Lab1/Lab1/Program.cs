@@ -2,7 +2,7 @@
 using Lab1;
 
 Console.WriteLine("sdD");
-CustomQueue<int> cqueue = new CustomQueue<int>(new List<int>(){});
+CustomQueue<int> cqueue = new CustomQueue<int>(new List<int>(){1, 2, 3, 4});
 Queue<string> queue = new Queue<string>(new List<string>(){"asdfas123123d", "asdfasf"});
 var a = cqueue.ToArray();
 string result;

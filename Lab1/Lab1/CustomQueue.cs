@@ -9,6 +9,17 @@ public class CustomQueue <T>: IEnumerable<T> where T: IComparable
     private Node<T> _headNode;
     private Node<T> _tailNode;
 
+    private event EventHandler? OnEnqueued = (sender, eventArgs) 
+        => Console.WriteLine("Enquque operation completed");
+    private event EventHandler? OnDequeued = (sender, eventArgs) 
+        => Console.WriteLine("Dequeue operation completed");
+    private event EventHandler? OnCleared = (sender, eventArgs) 
+        => Console.WriteLine("Clear operation completed");
+    private event EventHandler? OnCopiedTo = (sender, eventArgs) 
+        => Console.WriteLine("Copy operation completed");
+    private event EventHandler? OnReversed = (sender, eventArgs) 
+        => Console.WriteLine("Reverse operation completed");
+
     public int Count => _size;
     
     public CustomQueue()
@@ -60,6 +71,7 @@ public class CustomQueue <T>: IEnumerable<T> where T: IComparable
             activeNode = activeNode.next;
             index++;
         }
+        OnCopiedTo?.Invoke(this, new EventArgs());
     }
     
     public void Enqueue(T item)
@@ -78,6 +90,7 @@ public class CustomQueue <T>: IEnumerable<T> where T: IComparable
         }
   
         _size++;
+        OnEnqueued?.Invoke(this, new EventArgs());
     }
     
     public T Dequeue()
@@ -89,13 +102,16 @@ public class CustomQueue <T>: IEnumerable<T> where T: IComparable
         _headNode = _headNode.next;
 
         _size--;
+        OnDequeued?.Invoke(this, new EventArgs());
         return headNodeValue;
+        
     }
 
     public void Clear()
     {
         _headNode = null;
         _tailNode = null;
+        OnCleared?.Invoke(this, new EventArgs());
     }
 
     public bool Contains(T item)
@@ -138,6 +154,7 @@ public class CustomQueue <T>: IEnumerable<T> where T: IComparable
         IEnumerable<T> tempArray;
         tempArray = this.ToArray().Reverse();
         reversed_queue = new CustomQueue<T>(tempArray);
+        OnReversed?.Invoke(this, new EventArgs());
         return reversed_queue;
     }
     
