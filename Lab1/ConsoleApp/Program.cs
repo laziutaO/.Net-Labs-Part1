@@ -8,7 +8,7 @@ void ClearHandler (object? sender, EventArgs e) => Console.WriteLine("Clear oper
 void CopiedToHandler (object? sender, EventArgs e) => Console.WriteLine("Copy operation completed");
 void ReversedHandler (object? sender, EventArgs e) => Console.WriteLine("Reverse operation completed");
 
-void EnqueueTest<T>(T enqueueElement, List<T>? list) where T : IComparable
+void EnqueueTest<T>(T enqueueElement, IEnumerable<T>? list) where T : IComparable
 {
     CustomQueue<T> cqueue = new CustomQueue<T>(list);
     cqueue.OnEnqueued += EnqueueHandler;
@@ -18,8 +18,9 @@ void EnqueueTest<T>(T enqueueElement, List<T>? list) where T : IComparable
     foreach(var element in cqueue)
         Console.WriteLine(element);
 }
+EnqueueTest(12, new int[]{});
 
-void DequeueTest<T>(List<T>? list) where T : IComparable
+void DequeueTest<T>(IEnumerable<T>? list) where T : IComparable
 {
     CustomQueue<T> cqueue = new CustomQueue<T>(list);
     cqueue.OnDequeued += DequeueHandler;
@@ -29,9 +30,10 @@ void DequeueTest<T>(List<T>? list) where T : IComparable
     Console.WriteLine("Collection elements are:");
     foreach(var element in cqueue)
         Console.WriteLine(element);
-}   
+} 
+DequeueTest(new List<int>(){1, 12, 54, 190});
  
-void ClearTest<T>(List<T>? list) where T : IComparable
+void ClearTest<T>(IEnumerable<T>? list) where T : IComparable
 {
     CustomQueue<T> cqueue = new CustomQueue<T>(list);
     cqueue.OnCleared += ClearHandler;
@@ -40,16 +42,18 @@ void ClearTest<T>(List<T>? list) where T : IComparable
     Console.WriteLine("Collection elements are:");
     foreach(var element in cqueue)
         Console.WriteLine(element);
-}     
+}  
+ClearTest(new List<string>(){"a", "b", "c"});
 
-void ContainsTest<T>(T checkedElement, List<T>? list) where T : IComparable
+void ContainsTest<T>(T checkedElement, IEnumerable<T>? list) where T : IComparable
 {
     CustomQueue<T> cqueue = new CustomQueue<T>(list);
     var hasElement = cqueue.Contains(checkedElement);
     Console.WriteLine($"has {checkedElement}: {hasElement}");
 }
+ContainsTest(5, new []{3, 5, 11});
 
-void ToArrayTest<T>(List<T>? list) where T : IComparable
+void ToArrayTest<T>(IEnumerable<T>? list) where T : IComparable
 {
     CustomQueue<T> cqueue = new CustomQueue<T>(list);
     T[] arr = cqueue.ToArray();
@@ -58,9 +62,9 @@ void ToArrayTest<T>(List<T>? list) where T : IComparable
     foreach (var el in arr)
         Console.WriteLine(el);
 }
+ToArrayTest(new bool[]{true, false, false, true});
 
-
-void ReverseTest<T>(List<T>? list) where T : IComparable
+void ReverseTest<T>(IEnumerable<T>? list) where T : IComparable
 {
     CustomQueue<T> cqueue = new CustomQueue<T>(list);
     cqueue.OnReversed += ReversedHandler;
@@ -70,8 +74,9 @@ void ReverseTest<T>(List<T>? list) where T : IComparable
     foreach (var el in cqueue)
         Console.WriteLine(el);
 }
+ReverseTest(new int[]{11, 13, 15, 17});
 
-void CopyToTest<T>(T[] insertArray, int startIndex, List<T>? list) where T : IComparable
+void CopyToTest<T>(T[] insertArray, int startIndex, IEnumerable<T>? list) where T : IComparable
 {
     CustomQueue<T> cqueue = new CustomQueue<T>(list);
     cqueue.OnCopiedTo += CopiedToHandler;
@@ -81,3 +86,13 @@ void CopyToTest<T>(T[] insertArray, int startIndex, List<T>? list) where T : ICo
     foreach (var el in insertArray)
         Console.WriteLine(el);
 }    
+
+CopyToTest(new int[]{10, 11, 12, 13, 14, 15, 16}, 2, new List<int>(){100, 101, 102});
+
+void PeekTest<T>(IEnumerable<T>? list) where T : IComparable
+{
+    CustomQueue<T> cqueue = new CustomQueue<T>(list);
+    Console.WriteLine($"Peek element is {cqueue.Peek()}");
+}
+
+PeekTest(new List<string>(){"a", "b", "c"});  
