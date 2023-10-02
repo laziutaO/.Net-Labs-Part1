@@ -8,7 +8,6 @@ void ClearHandler (object? sender, EventArgs e) => Console.WriteLine("Clear oper
 void CopiedToHandler (object? sender, EventArgs e) => Console.WriteLine("Copy operation completed");
 void ReversedHandler (object? sender, EventArgs e) => Console.WriteLine("Reverse operation completed");
 
-
 void EnqueueTest<T>(T enqueueElement, List<T>? list) where T : IComparable
 {
     CustomQueue<T> cqueue = new CustomQueue<T>(list);
