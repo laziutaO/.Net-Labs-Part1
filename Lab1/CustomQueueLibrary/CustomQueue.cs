@@ -1,14 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Linq;
 
-
-namespace Lab1;
-
-public class CustomQueue <T>: IEnumerable<T> where T: IComparable
+namespace CustomQueueLibrary
 {
-    private int _size;
+    public class CustomQueue <T>: IEnumerable<T> where T: IComparable
+    {
+        private int _size;
     private Node<T> _headNode;
     private Node<T> _tailNode;
-
+    
     private event EventHandler? OnEnqueued = (sender, eventArgs) 
         => Console.WriteLine("Enquque operation completed");
     private event EventHandler? OnDequeued = (sender, eventArgs) 
@@ -206,6 +207,5 @@ public class CustomQueue <T>: IEnumerable<T> where T: IComparable
             
         }
     }
-    
+    }
 }
-

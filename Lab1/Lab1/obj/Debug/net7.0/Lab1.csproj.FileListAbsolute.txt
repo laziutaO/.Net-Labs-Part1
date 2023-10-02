@@ -28,3 +28,6 @@ C:\Users\WellDone\Desktop\kpi\.Net(Labs1 - 2)\Lab1\Lab1\bin\Debug\net7.0\Lab1.dl
 C:\Users\WellDone\Desktop\kpi\.Net(Labs1 - 2)\Lab1\Lab1\bin\Debug\net7.0\Lab1.pdb
 C:\Users\WellDone\Desktop\kpi\.Net(Labs1 - 2)\Lab1\Lab1\obj\Debug\net7.0\Lab1.genruntimeconfig.cache
 C:\Users\WellDone\Desktop\kpi\.Net(Labs1 - 2)\Lab1\Lab1\obj\Debug\net7.0\ref\Lab1.dll
+C:\Users\WellDone\Desktop\kpi\.Net(Labs1 - 2)\Lab1\Lab1\bin\Debug\net7.0\MyLibrary.dll
+C:\Users\WellDone\Desktop\kpi\.Net(Labs1 - 2)\Lab1\Lab1\bin\Debug\net7.0\MyLibrary.pdb
+C:\Users\WellDone\Desktop\kpi\.Net(Labs1 - 2)\Lab1\Lab1\obj\Debug\net7.0\Lab1.csproj.CopyComplete

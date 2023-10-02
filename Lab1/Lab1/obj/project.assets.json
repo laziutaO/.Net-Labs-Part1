@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net7.0": {}
+    "net7.0": {
+      "MyLibrary/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/MyLibrary.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MyLibrary.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "MyLibrary/1.0.0": {
+      "type": "project",
+      "path": "../MyLibrary/MyLibrary.csproj",
+      "msbuildProject": "../MyLibrary/MyLibrary.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net7.0": []
+    "net7.0": [
+      "MyLibrary >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\WellDone\\.nuget\\packages\\": {},
@@ -39,7 +58,11 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\WellDone\\Desktop\\kpi\\.Net(Labs1 - 2)\\Lab1\\MyLibrary\\MyLibrary.csproj": {
+              "projectPath": "C:\\Users\\WellDone\\Desktop\\kpi\\.Net(Labs1 - 2)\\Lab1\\MyLibrary\\MyLibrary.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
