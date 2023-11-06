@@ -24,7 +24,7 @@ public class CopyToTest
     }
     
     [Theory]
-    [MemberData(nameof(ArgumentNullException))]
+    [MemberData(nameof(ArgumentNullExceptionTestData))]
     public void CopyTo_ToNullArray_NullException(CustomQueue<int> startingCollection, int[] array, int index)
     {
         CustomQueue<int> cq = startingCollection;
@@ -33,7 +33,7 @@ public class CopyToTest
     }
     
     [Theory]
-    [MemberData(nameof(ArgumentException))]
+    [MemberData(nameof(ArgumentExceptionTestData))]
     public void CopyTo_ToSmallArray_ArgumentException(CustomQueue<int> startingCollection, int[] array, int index)
     {
         CustomQueue<int> cq = startingCollection;
@@ -79,7 +79,7 @@ public class CopyToTest
         };
     }
     
-    public static IEnumerable<object[]> ArgumentNullException()
+    public static IEnumerable<object[]> ArgumentNullExceptionTestData()
     {
         yield return new object[] {
             new CustomQueue<int>(new int[] { 232, 441, 55 }),
@@ -88,7 +88,7 @@ public class CopyToTest
         };
     }
 
-    public static IEnumerable<object[]> ArgumentException()
+    public static IEnumerable<object[]> ArgumentExceptionTestData()
     {
         yield return new object[] {
             new CustomQueue<int>(new int[] { 232, 441, 55 }),
