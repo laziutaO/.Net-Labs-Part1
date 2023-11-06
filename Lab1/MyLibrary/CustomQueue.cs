@@ -56,7 +56,7 @@ public class CustomQueue <T>: IEnumerable<T> where T: IComparable
             throw new ArgumentNullException("Value can not be null");
         else if (index < 0 || index > array.Length - 1)
             throw new ArgumentOutOfRangeException("Index can not be out of range");
-        else if (array.Length - index + 1 < _size)
+        else if (array.Length - index < _size)
             throw new ArgumentException("Number of the elements in CustomQueue is greater than the Array can contain");
         
         while (activeNode != null)
